@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  &:before{
+    content:'';
+    content: "";
+    width: 100%;
+    height: 100vh;
+    background: #9093d3;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
