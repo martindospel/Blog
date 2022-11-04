@@ -1,11 +1,10 @@
-import { gql } from "graphql-request";
-import { GraphQLClient } from "graphql-request";
+import { request, gql } from "graphql-request";
+// import { GraphQLClient } from "graphql-request";
+
+const endpoint =
+  "https://api-eu-central-1-shared-euc1-02.hygraph.com/v2/cl9kexqvf33pe01t8a1o5a58p/master";
 
 export const getPosts = async () => {
-  const graphQLClient = new GraphQLClient(
-    "https://api-eu-central-1-shared-euc1-02.hygraph.com/v2/cl9kexqvf33pe01t8a1o5a58p/master"
-  );
-
   const query = gql`
     query MyQuery {
       postsConnection {
@@ -36,6 +35,6 @@ export const getPosts = async () => {
     }
   `;
 
-  const result = await graphQLClient.request(query);
-  return result.PostsConnection;
+  const result = await request(endpoint, query);
+  return result.postsConnection.edges;
 };
