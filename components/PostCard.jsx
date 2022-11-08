@@ -4,7 +4,7 @@ import moment from "moment/moment";
 
 const PostCard = ({ post }) => {
   return (
-    <div className="shadow-lg rounded-lg lg:p-4 pb-9 mb-3 bg-gray-300 bg-opacity-30">
+    <div className="shadow-lg rounded-lg lg:p-4 pb-9 mb-3 bg-gray-300 bg-opacity-30 hover:bg-opacity-50">
       <div className="relative overflow-hidden shadow-md">
         <img
           src={post.featuredImage.url}
@@ -12,7 +12,7 @@ const PostCard = ({ post }) => {
           className="object-top h-80 w-full object-cover shadow-lg rounded-t-lg lg:rounded-lg"
         />
       </div>
-      <h1 className="transition duration-3400 text-center mb-5 hover:text-gray-400 text-2xl font-bold">
+      <h1 className="transition duration-3400 text-center mb-5 hover:text-gray-700 text-2xl font-bold">
         <Link href={`/post/${post.slug}`}>{post.title}</Link>
       </h1>
       <div className="block lg:flex text-center items-center justify-center mb-8 w-full">
