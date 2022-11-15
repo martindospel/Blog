@@ -5,7 +5,7 @@ const endpoint =
 
 export const getPosts = async () => {
   const query = gql`
-    query Query {
+    query QueryGetPosts {
       postsConnection {
         edges {
           node {
@@ -38,9 +38,43 @@ export const getPosts = async () => {
   return result.postsConnection.edges;
 };
 
+export const getPostDetails = async (slug) => {
+  const query = gql`
+    query QueryGetPostDetails($slug: String!) {
+      post(where: { slug: $slug }) {
+        author {
+          bio
+          name
+          id
+          photo {
+            url
+          }
+        }
+        createdAt
+        slug
+        title
+        excerpt
+        featuredImage {
+          url
+        }
+        categories {
+          name
+          slug
+        }
+        content {
+          raw
+        }
+      }
+    }
+  `;
+
+  const result = await request(endpoint, query, { slug });
+  return result.post;
+};
+
 export const getRecentPosts = async () => {
   const query = gql`
-  query GetPostDetails() {
+  query QueryGetRecentPosts() {
     posts(
       orderBy: createdAt_ASC
       last: 3
@@ -60,7 +94,7 @@ export const getRecentPosts = async () => {
 
 export const getSimilarPosts = async () => {
   const query = gql`
-    query GetPostDetails($slug: String!, $categories: [String!]) {
+    query QueryGetSimilarPosts($slug: String!, $categories: [String!]) {
       posts(
         where: {
           slug_not: $slug
@@ -83,7 +117,7 @@ export const getSimilarPosts = async () => {
 
 export const getCategories = async () => {
   const query = gql`
-    query Getcategories{
+    query QueryGetCategories {
       categories {
         name
         slug
