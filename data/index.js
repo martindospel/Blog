@@ -92,7 +92,7 @@ export const getRecentPosts = async () => {
   return result.posts;
 };
 
-export const getSimilarPosts = async () => {
+export const getSimilarPosts = async (categories, slug) => {
   const query = gql`
     query QueryGetSimilarPosts($slug: String!, $categories: [String!]) {
       posts(
@@ -111,7 +111,7 @@ export const getSimilarPosts = async () => {
       }
     }
   `;
-  const result = await request(endpoint, query);
+  const result = await request(endpoint, query, {categories, slug});
   return result.posts;
 };
 

@@ -42,3 +42,12 @@ export async function getStaticProps({ params }) {
     props: { post: post },
   };
 }
+
+//nextjs must know all the possible dynamic paths so that it can render them
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return {
+    paths: posts.map(({ node: { slug } }) => ({ params: { slug } })),
+    fallback: false
+  };
+}
