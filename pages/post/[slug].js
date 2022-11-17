@@ -14,7 +14,7 @@ const PostDetails = ({ post }) => {
   return (
     <div className="container mx-auto px-10 mb-8">
       <div className="grid grid-cols-1 lg:grid-cols-12 gaps-12">
-        <div className="col-span-1 lg:col-span-8">
+        <div className="col-span-1 lg:col-span-8 pr-2">
           <PostDetail post={post} />
           <Author author={post.author} />
           <CommentsForm slug={post.slug} />
@@ -43,11 +43,10 @@ export async function getStaticProps({ params }) {
   };
 }
 
-//nextjs must know all the possible dynamic paths so that it can render them
 export async function getStaticPaths() {
   const posts = await getPosts();
   return {
     paths: posts.map(({ node: { slug } }) => ({ params: { slug } })),
-    fallback: false
+    fallback: false,
   };
 }
