@@ -5,6 +5,7 @@ const PostDetail = ({ post }) => {
   const getContentSection = (index, text, obj, type) => {
     let finalText = text;
 
+    //alternating different styles of text
     if (obj) {
       if (obj.bold) {
         finalText = <b key={index}>{text}</b>;
@@ -19,6 +20,7 @@ const PostDetail = ({ post }) => {
       }
     }
 
+    //determine what ui will look like when certain features are added
     switch (type) {
       case "image":
         return (
