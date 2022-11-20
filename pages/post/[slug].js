@@ -5,7 +5,6 @@ import {
   PostDetail,
   Categories,
   PostWidget,
-  // Author,
   Comments,
   CommentsForm,
 } from "../../components";
@@ -16,7 +15,6 @@ const PostDetails = ({ post }) => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gaps-12">
         <div className="col-span-1 lg:col-span-8 pr-2">
           <PostDetail post={post} />
-          {/* <Author author={post.author} /> */}
           <CommentsForm slug={post.slug} />
           <Comments slug={post.slug} />
         </div>
