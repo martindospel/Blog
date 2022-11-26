@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 
+import { commentSubmit } from "../data";
+
 const CommentsForm = ({ slug }) => {
   const [error, setError] = useState(false);
   const [localStorage, setLocalStorage] = useState(null);
-  const [commentSubmit, setCommentSubmit] = useState(false);
+  const [submitComment, setCommentSubmit] = useState(false);
   const comment = useRef();
   const name = useRef();
   const email = useRef();
@@ -18,19 +20,32 @@ const CommentsForm = ({ slug }) => {
     const { checked: storeData } = storeData.current;
 
     return (!name || !email || !comment) && setError(true);
-    const commentObject = {
-      name,
-      email,
-      comment,
-      slug,
-    };
-
-    return storeData
-      ? localStorage.setItem("name", name) &
-          localStorage.setItem("email", email)
-      : localStorage.removeItem("name", name) &
-          localStorage.removeItem("email", email);
   };
+  const commentObject = {
+    name,
+    email,
+    comment,
+    slug,
+  };
+
+  if (storeData) {
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("name", name);
+      window.localStorage.setItem("email", email);
+    }
+  } else {
+    if (typeof window !== "undefined") {
+      window.localStorage.removeItem("name", name);
+      window.localStorage.removeItem("email", email);
+    }
+  }
+
+  commentSubmit(commentObject).then((res) => {
+    setCommentSubmit(true);
+    setTimeout(() => {
+      setCommentSubmit(false);
+    }, 5000);
+  });
 
   return (
     <div className="shadow-lg rounded-lg lg:p-4 pb-9 mb-3 bg-gray-300 bg-opacity-30 hover:bg-opacity-20">
@@ -89,7 +104,7 @@ const CommentsForm = ({ slug }) => {
         >
           Post Comment
         </button>
-        {commentSubmit && (
+        {submitComment && (
           <span className="text-l float-right font-semibold mt-3 text-green-400">
             Thanks for your comment. It has been submitted for review.
           </span>

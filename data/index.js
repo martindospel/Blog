@@ -133,5 +133,5 @@ export const commentSubmit = async (object) => {
     method: "POST",
     body: JSON.stringify(object),
   });
-  return result.json()
+  return result.json();
 };
