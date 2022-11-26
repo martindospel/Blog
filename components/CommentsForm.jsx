@@ -15,16 +15,29 @@ const CommentsForm = ({ slug }) => {
     const { value: name } = name.current;
     const { value: email } = email.current;
     const { value: comment } = comment.current;
+    const { checked: storeData } = storeData.current;
 
     return (!name || !email || !comment) && setError(true);
+    const commentObject = {
+      name,
+      email,
+      comment,
+      slug,
+    };
+
+    return storeData
+      ? localStorage.setItem("name", name) &
+          localStorage.setItem("email", email)
+      : localStorage.removeItem("name", name) &
+          localStorage.removeItem("email", email);
   };
 
   return (
     <div className="shadow-lg rounded-lg lg:p-4 pb-9 mb-3 bg-gray-300 bg-opacity-30 hover:bg-opacity-20">
-      <h3 className="text-xl mb-4 font-semibold border-b pb-4">
+      <h3 className="text-xl mb-4 font-semibold pb-2 lg:pb-4 ml-2 lg:ml-0">
         Post a comment
       </h3>
-      <div className="grid grid-cols-1 gap-4 mb-3">
+      <div className="grid grid-cols-1 gap-4 mb-3 p-1 lg:p-0">
         <textarea
           className="text-gray-600 p-2 outline-none w-full rounded-lg focus:ring-1 focus:ring-gray-200 bg-gray-100"
           placeholder="Any thoughts?"
@@ -32,7 +45,7 @@ const CommentsForm = ({ slug }) => {
           ref={comment}
         />
       </div>
-      <div className="grid grid-cols-1 gap-4 mb-4 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 mb-4 lg:grid-cols-2 p-1 lg:p-0">
         <input
           className="text-gray-600 py-1 px-2 outline-none w-full rounded-lg focus:ring-1 focus:ring-gray-200 bg-gray-100"
           placeholder="Name"
@@ -48,8 +61,27 @@ const CommentsForm = ({ slug }) => {
           ref={email}
         />
       </div>
+      {/* <div className="grid grid-cols-1 gap-4 mb-3"> */}
+      <div className="mt-2 flex justify-center lg:justify-end">
+        <div>
+          <label
+            className="text-black-900 cursor-pointer pr-1"
+            htmlFor="storeData"
+          >
+            Save details
+          </label>
+          <input
+            className="cursor-pointer"
+            id="storeData"
+            value="true"
+            name="storeData"
+            type="checkbox"
+            ref={storeData}
+          />
+        </div>
+      </div>
       {error && <p className="text-xs text-red-400">All fields required.</p>}
-      <div className="mt-2 flex justify-end">
+      <div className="mt-2 flex justify-center lg:justify-end">
         <button
           type="button"
           onClick={handleSubmitComment}

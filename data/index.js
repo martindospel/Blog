@@ -111,7 +111,7 @@ export const getSimilarPosts = async (categories, slug) => {
       }
     }
   `;
-  const result = await request(endpoint, query, {categories, slug});
+  const result = await request(endpoint, query, { categories, slug });
   return result.posts;
 };
 
@@ -126,4 +126,12 @@ export const getCategories = async () => {
   `;
   const result = await request(endpoint, query);
   return result.categories;
+};
+
+export const commentSubmit = async (object) => {
+  const result = await fetch("/api/comments", {
+    method: "POST",
+    body: JSON.stringify(object),
+  });
+  return result.json()
 };
